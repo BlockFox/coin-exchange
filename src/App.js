@@ -1,34 +1,75 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Coin from './components/Coin/Coin';
+import Coinlist from './components/Coinlist/Coinlist';
 import AccountBalance from './components/AccountBalance/AccountBalance';
+import AppHeader from './components/AppHeader/AppHeader';
+import styled from 'styled-components';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className ="App-title">Coin Exchange</h1>
-      </header>
-      <AccountBalance currency = "$" amount = {10000}/>
-      <table className = "Coin-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Ticker</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody id= "btc_table">
-          <Coin name = "Bitcoin" ticker = "BTC" currency = "$" price = {9575.18}/>
-          <Coin name = "Ethereum " ticker = "ETH" currency = "$" price = {283.10}/>
-          <Coin name = "Tether " ticker = "USDT" currency = "$" price = {0.999}/>
-          <Coin name = "Litecoin" ticker = "LTC" currency = "$" price = {46.64}/>
-        </tbody>
-    </table>
-    </div>
-  );
+const Div = styled.div`
+  text-align: center;
+  background-color: rgb(20, 56  ,97);
+  color: #cccccc;
+`
+
+class App extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      balance: 10000,
+      coinData: [
+        {
+          name: "Bitcoin",
+          ticker: "BTC",
+          currency: "$",
+          price: 9575.18
+        },
+        {
+          name: "Ethereum",
+          ticker: "ETH",
+          currency: "$",
+          price: 314.18
+        },
+        {
+          name: "Litecoin",
+          ticker: "LTC",
+          currency: "$",
+          price: 55.18
+        },
+        {
+          name: "Ripple",
+          ticker: "XRP",
+          currency: "$",
+          price: 0.28
+        },
+        {
+          name: "Tether",
+          ticker: "USDT",
+          currency: "$",
+          price: 1.0
+        },
+        {
+          name: "BitcoinCash",
+          ticker: "BCH",
+          currency: "$",
+          price: 344.24
+        }
+
+      ]
+    }
+  }
+
+
+  render() {
+    return (
+      <Div className="App">
+        <AppHeader />
+        <AccountBalance currency = "$" amount = {this.state.balance}/>
+        <Coinlist coinData = {this.state.coinData}/>
+        
+      </Div>
+    );
+  }
+
 }
 
 export default App;
