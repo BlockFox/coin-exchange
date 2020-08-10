@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import './Coin.css';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -13,25 +12,26 @@ export default class Coin extends Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            currency: this.props.currency,
-            price: this.props.price
-        }
+        // this.state = {
+        //     currency: this.props.currency,
+        //     price: this.props.price
+        // }
+        // console.log(props);
         this.refreshPrice = this.refreshPrice.bind(this);
     }
 
-    randomPercentage(){
-        return 0.995 + Math.random()*0.01;
-    }
+    // randomPercentage(){
+    //     return 0.995 + Math.random()*0.01;
+    // }
 
-    setRandomPrice(){
-        this.setState( function(oldState) {
-            return{
-                currency: "$",
-                price: this.state.price * this.randomPercentage()
-            }
-        });
-    }
+    // setRandomPrice(){
+    //     this.setState( function(oldState) {
+    //         return{
+    //             currency: "$",
+    //             price: this.state.price * this.randomPercentage()
+    //         }
+    //     });
+    // }
 
 
    /* 
@@ -55,8 +55,14 @@ export default class Coin extends Component {
     */
 
     refreshPrice (event) {
+        // Prevent default action of submittin gthe form
+        event.preventDefault();
 
-        this.setRandomPrice();
+        // this.setRandomPrice();
+        // -> osolet
+
+        //call handle method given via props from parent component
+        this.props.handleRefresh(this.props.ticker);
     }
 
 
@@ -67,7 +73,7 @@ export default class Coin extends Component {
             <tr className ="coin-row">
                 <TableData>{this.props.name}</TableData>
                 <TableData>{this.props.ticker}</TableData>
-                <TableData>{this.state.currency}{this.state.price}</TableData>
+                <TableData>{this.props.currency}{this.props.price}</TableData>
                 <TableData>
                     <button onClick = { this.refreshPrice}>Refresh</button>
                 </TableData>
