@@ -10,13 +10,17 @@ const Table = styled.table`
 
 export default class Coinlist extends Component {
     render() {
+        const toggleBalance = this.props.showBalance ?  
+            this.props.balance : '***'
         return (
             <Table className = "Coin-table">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Ticker</th>
+                        <th>Balance</th>
                         <th>Price</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                     <tbody id= "btc_table">
@@ -26,6 +30,7 @@ export default class Coinlist extends Component {
                                 handleRefresh,
                                 name, 
                                 ticker, 
+                                balance,
                                 currency, 
                                 price
                             }) => 
@@ -34,6 +39,7 @@ export default class Coinlist extends Component {
                                 handleRefresh = {this.props.handleRefresh}
                                 name = {name} 
                                 ticker = {ticker} 
+                                balance = {this.props.showBalance ? balance : '***'}
                                 currency = {currency} 
                                 price = {price}
                             />

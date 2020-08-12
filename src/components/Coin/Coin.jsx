@@ -7,18 +7,34 @@ const TableData = styled.td`
     width: 10vh;
     `;
 
+const Button = styled.button`
+    height: 2rem;
+    width: 100%;
+    background-color: #282c34;
+    color: #61dafb;
+    border: none;
+    font-size: 1rem;
+    :active {
+        background: #0053ba;
+    }
+    :hover {
+        border: 1px solid #cccccc;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+`;
 
 export default class Coin extends Component {
 
-    constructor(props){
-        super(props);
-        // this.state = {
-        //     currency: this.props.currency,
-        //     price: this.props.price
-        // }
-        // console.log(props);
-        this.refreshPrice = this.refreshPrice.bind(this);
-    }
+    // constructor(props){
+    //     super(props);
+    //     // this.state = {
+    //     //     currency: this.props.currency,
+    //     //     price: this.props.price
+    //     // }
+    //     // console.log(props);
+    //     this.refreshPrice = this.refreshPrice.bind(this);
+    // }
 
     // randomPercentage(){
     //     return 0.995 + Math.random()*0.01;
@@ -33,28 +49,25 @@ export default class Coin extends Component {
     //     });
     // }
 
+    // componentDidMount(){
+    //     const callbackIntervall = () =>{
+    //         // set state of new random value -> chaged: call function instead
+    //         //const randomPercentage = this.randomPercentage();
 
-   /* 
-    componentDidMount(){
-        const callbackIntervall = () =>{
-            // set state of new random value -> chaged: call function instead
-            //const randomPercentage = this.randomPercentage();
-
-            // short version to solve -> direkt input of Object
-            // this.setState({price: this.state.price * randomPercentage});
+    //         // short version to solve -> direkt input of Object
+    //         // this.setState({price: this.state.price * randomPercentage});
             
-            // version with function 
-            // -> so you also can react on click button or something else and then return the object
+    //         // version with function 
+    //         // -> so you also can react on click button or something else and then return the object
 
-            this.setRandomPrice();
+    //         this.setRandomPrice();
             
-        }
-        setInterval(callbackIntervall, 1000);
-    }
+    //     }
+    //     setInterval(callbackIntervall, 1000);
+    // }
     
-    */
 
-    refreshPrice (event) {
+    refreshPrice = (event) => {
         // Prevent default action of submittin gthe form
         event.preventDefault();
 
@@ -73,9 +86,10 @@ export default class Coin extends Component {
             <tr className ="coin-row">
                 <TableData>{this.props.name}</TableData>
                 <TableData>{this.props.ticker}</TableData>
+                <TableData>{this.props.balance}</TableData>
                 <TableData>{this.props.currency}{this.props.price}</TableData>
                 <TableData>
-                    <button onClick = { this.refreshPrice}>Refresh</button>
+                    <Button onClick = { this.refreshPrice}>Refresh</Button>
                 </TableData>
             </tr>
             
