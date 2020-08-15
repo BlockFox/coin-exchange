@@ -3,6 +3,9 @@ import Coinlist from './components/Coinlist/Coinlist';
 import AccountBalance from './components/AccountBalance/AccountBalance';
 import AppHeader from './components/AppHeader/AppHeader';
 import styled from 'styled-components';
+import axios from 'axios'
+
+const COIN_COUNT = 10;
 
 const Div = styled.div`
   text-align: center;
@@ -11,12 +14,13 @@ const Div = styled.div`
 `
 
 class App extends React.Component{
-    
+
   state = {
     balance: 10000,
     balanceVisibility : true,
     coinData: [
-      {
+      /* 
+        {
         name: "Bitcoin",
           ticker: "BTC",
           balance: 0.123,
@@ -58,7 +62,7 @@ class App extends React.Component{
           currency: "$",
           price: 344.24
         }
-
+      */
       ]
     }
   
@@ -70,12 +74,50 @@ class App extends React.Component{
   //   this.toggleBalance = this.toggleBalance.bind(this);
   // }
 
-  handleRefresh = (valueChangeTicker) => {
-   const coin = this.state.coinData.map(
-      (values) => {
+    componentDidMount = async () =>  {
+      const response = 
+        await axios.get('https://api.coinpaprika.com/v1/coins');
+
+      const coinIDs = response.data.slice(0,COIN_COUNT)
+      .map( coin => coin.id);
+
+      const promises = coinIDs.map(id => 
+        this.getCoinData(id)
+        // axios.get('https://api.coinpaprika.com/v1/tickers/'+ id)
+      ) ;
+
+      const coinData = (await Promise.all(promises)).map( coin => {
+        // const coin = prom.data;
+        // let price = parseFloat(Number(coin.quotes.USD.price)).toFixed(4);
+        return {
+          key: coin.id,
+          name: coin.name,
+          ticker: coin.symbol,
+          balance: 0,
+          currency: "$",
+          price: coin.quotes.USD.price
+        }
+      });
+
+      this.setState({coinData});
+    }
+
+    getCoinData = async (coinID) => {
+    let response = 
+      await axios.get('https://api.coinpaprika.com/v1/tickers/'+ coinID);
+    return response.data;
+  }     
+
+  handleRefresh =  (valueChangeTicker) => {
+   const coin =  this.state.coinData.map(
+       (values) => {
         let retVal = {...values};
         if (valueChangeTicker === retVal.ticker){
-          retVal.price *= this.randomPercentage();
+          // console.log(retVal);
+          this.getCoinData(retVal.key)
+          .then(coin => {
+            retVal.price = coin.quotes.USD.price;
+          });
         }
         
         return retVal;
