@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
@@ -26,44 +26,32 @@ const Button = styled.button`
     }
 `;
 
-export default class AccountBalance extends Component {
+export default function AccountBalance(props) {
 
-    constructor(props){
-        super(props);
-        // this.state = {
-        //     currency: this.props.currency,
-        //     amount: this.props.amount
-        // }
-        this.handleBalanceButton = this.handleBalanceButton.bind(this);
-    }
-
-    handleBalanceButton(event){
+    const handleBalanceButton = (event) => {
         // Prevent the default action of submitting the form
         event.preventDefault();
-
-        this.props.toggleBalance();
-
+        props.toggleBalance();
     }
 
-    render() {
-        const buttonText = this.props.showBalance ? ' HideBalance' : ' Schow Balance';
+    const buttonText = props.showBalance ? ' HideBalance' : ' Schow Balance';
         
-        const toggleBalance = this.props.showBalance ?
-         <span>{this.props.currency}{this.props.amount}</span> : '***';
-        return (
+    const toggleBalance = props.showBalance ?
+       <span>{props.currency}{props.amount}</span> : '***';
+    
+       return (
             <>
             <Section className="accountbalance">
                 <div>
                     <strong>Your Balance is : </strong> {toggleBalance}
                 </div>
                 <div>
-                    <Button onClick= {this.handleBalanceButton}>{buttonText}</Button>
+                    <Button onClick= {handleBalanceButton}>{buttonText}</Button>
                 </div>
             </Section>
             </>
         )
     }
-}
 
 AccountBalance.propTypes = {
     currency: PropTypes.string.isRequired,

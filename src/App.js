@@ -87,7 +87,6 @@ class App extends React.Component{
       ) ;
 
       const coinData = (await Promise.all(promises)).map( coin => {
-        // const coin = prom.data;
         // let price = parseFloat(Number(coin.quotes.USD.price)).toFixed(4);
         return {
           key: coin.id,

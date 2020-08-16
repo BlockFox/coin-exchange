@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import logo from './logo.svg';
 import styled from 'styled-components';
 
@@ -25,13 +25,11 @@ import styled from 'styled-components';
   
 
 
-export default class AppHeader extends Component {
-    render() {
-        return (
-        <Header className="App-header">
-          <Img src={logo} className="App-logo" alt="logo" />
-          <H1 className ="App-title">Coin Exchange</H1>
-        </Header>
-        )
-    }
+export default function AppHeader(props) {
+      return (
+      <Header className="App-header">
+        <Img src={logo} className="App-logo" alt="logo" />
+        <H1 className ="App-title">Coin Exchange</H1>
+      </Header>
+      )
 }
